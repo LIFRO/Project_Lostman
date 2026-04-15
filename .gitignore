@@ -1,0 +1,41 @@
+# Build outputs
+bin/
+obj/
+**/bin/
+**/obj/
+
+# Visual tooling caches
+.vs/
+.vscode/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Logs and caches
+*.log
+*.tlog
+*.cache
+artifacts/
+
+# NuGet
+*.nupkg
+packages/
+.nuget/
+
+# ASP.NET Core local config
+appsettings.Development.json
+
+# JetBrains Rider / ReSharper
+_ReSharper*/
+*.DotSettings.user
+
+# Frontend
+node_modules/
+dist/
+build/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+.fake

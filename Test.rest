@@ -1,0 +1,11 @@
+@base = http://localhost:5180
+
+
+
+POST {{base}}/api/create
+Content-Type: application/json
+
+{
+    "UserId": "gjh787",
+    "Name": "hello"
+}
