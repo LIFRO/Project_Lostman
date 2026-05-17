@@ -1,3 +1,4 @@
+import axios from "axios";
 import type { Api, ApiFolder } from "../Model/TypeLibrary";
 
 export type FetchItemsResponse = {
@@ -7,15 +8,9 @@ export type FetchItemsResponse = {
 
 export async function FetchItems(parentId: number | null): Promise<FetchItemsResponse> {
     const query = parentId === null ? "" : `?id=${parentId}`;
+    const url = `http://localhost:5180/api/GetItemsUnderParent${query}`;
 
-    const response = await fetch(`http://localhost:5180/api/GetItemsUnderParent${query}`);
-    if(!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Get failed: ${response.status} ${errorText}`);
-    }
-
-    const result = await response.json() as FetchItemsResponse;
-    console.log(result);
-    return result;
-
+    const response = await axios.get<FetchItemsResponse>(url);
+    console.log(response.data);
+    return response.data;
 }

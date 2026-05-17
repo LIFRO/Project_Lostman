@@ -1,29 +1,28 @@
+import axios from "axios";
+
 export async function SaveFolder(folder: string) {
-    const response = await fetch("http://localhost:5180/api/createCatalog", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: folder }),
-    });
-
-    console.log("status:", response.status);
-
-    if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Save failed: ${response.status} ${errorText}`);
+    try {
+        const response = await axios.post("http://localhost:5180/api/createCatalog", { name: folder });
+        console.log("status:", response.status);
+    } catch (error: unknown) {
+        if (axios.isAxiosError(error) && error.response) {
+            throw new Error(`Save failed: ${error.response.status} ${JSON.stringify(error.response.data)}`);
+        }
+        throw error;
     }
 }
 
-export async function SaveApi(Api: string, apiMethod: string)  {
-    const response = await fetch("http://localhost:5180/api/createApi", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: Api }),
-    });
-
-    console.log("status:", response.status);
-
-    if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Save failed: ${response.status} ${errorText}`);
+export async function SaveApi(apiName: string, apiMethod: string)  {
+    try {
+        const response = await axios.post("http://localhost:5180/api/createApi", {
+            name: apiName,
+            method: apiMethod,
+        });
+        console.log("status:", response.status);
+    } catch (error: unknown) {
+        if (axios.isAxiosError(error) && error.response) {
+            throw new Error(`Save failed: ${error.response.status} ${JSON.stringify(error.response.data)}`);
+        }
+        throw error;
     }
 }
