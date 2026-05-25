@@ -5,8 +5,8 @@ defineProps<{items: Api[]}>();
 
 <template>
     <ul>
-        <li v-for="item in items" keyt="item.id">
+        <button v-for="item in items" keyt="item.id">
             <div>{{item.name}}</div>
-        </li>
+        </button>
     </ul>
 </template>

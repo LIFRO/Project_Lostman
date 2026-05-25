@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import ApiManager from './Views/ApiManager.vue'
+import MainView from './Views/MainView/MainView.vue';
 </script>
 
 <template>
-  <ApiManager />
+  <MainView />
 </template>
