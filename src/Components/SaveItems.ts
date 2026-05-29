@@ -3,7 +3,11 @@ import type { httpMethod } from "../Model/ApiTypes";
 
 export async function SaveFolder(folder: string) {
     try {
-        const response = await axios.post("http://localhost:5180/api/createCatalog", { name: folder });
+        const response = await axios.post(
+            "http://localhost:5180/api/createCatalog",
+            { name: folder }, 
+            { timeout: 5000 }
+        );
         console.log("status:", response.status);
     } catch (error: unknown) {
         if (axios.isAxiosError(error) && error.response) {
@@ -19,7 +23,9 @@ export async function SaveApi(apiName: string, apiMethod: httpMethod, apiUrl: st
             name: apiName,
             method: apiMethod,
             apiUrl: apiUrl
-        });
+        },
+        { timeout: 5000 }
+        );
         console.log("status:", response.status);
     } catch (error: unknown) {
         if (axios.isAxiosError(error) && error.response) {
