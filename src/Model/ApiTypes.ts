@@ -1,3 +1,5 @@
+export type httpMethod = "GET" | "POST" | "PUT" | "DELETE"
+
 export type ApiFolder = {
     id: number
     name:string
@@ -9,8 +11,11 @@ export type Api = {
     id: number
     name:string
     parentId:number | null
-    method: "GET" | "POST" | "PUT" | "DELETE"
+    method: httpMethod
     url:string
 }
+
+export type CreateApi = Omit<Api, 'id'>
+export type CreateFolder = Omit<Api, 'id'>
 
 export type ApiType = ApiFolder | Api

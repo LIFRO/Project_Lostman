@@ -1,4 +1,5 @@
 import axios from "axios";
+import type { httpMethod } from "../Model/ApiTypes";
 
 export async function SaveFolder(folder: string) {
     try {
@@ -12,11 +13,12 @@ export async function SaveFolder(folder: string) {
     }
 }
 
-export async function SaveApi(apiName: string, apiMethod: string)  {
+export async function SaveApi(apiName: string, apiMethod: httpMethod, apiUrl: string)  {
     try {
         const response = await axios.post("http://localhost:5180/api/createApi", {
             name: apiName,
             method: apiMethod,
+            apiUrl: apiUrl
         });
         console.log("status:", response.status);
     } catch (error: unknown) {
