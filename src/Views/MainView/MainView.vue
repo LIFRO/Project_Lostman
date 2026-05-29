@@ -20,9 +20,7 @@
         
         try{
             await SaveApi(data.name, data.method, data.url)
-
             const items:FetchItemsResponse = await FetchItems(null)
-
             if(!items) return;
 
             toggleCreateApi()
