@@ -16,6 +16,6 @@ export type Api = {
 }
 
 export type CreateApi = Omit<Api, 'id'>
-export type CreateFolder = Omit<Api, 'id'>
+export type CreateFolder = Omit<ApiFolder, 'id'>
 
 export type ApiType = ApiFolder | Api
