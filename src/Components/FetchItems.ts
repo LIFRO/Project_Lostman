@@ -6,9 +6,17 @@ export type FetchItemsResponse = {
     apis: Api[]
 }
 
-export async function FetchItems(parentId: number | null): Promise<FetchItemsResponse> {
+export async function FetchItemsById(parentId: number | null): Promise<FetchItemsResponse> {
     const query = parentId === null ? "" : `?id=${parentId}`;
     const url = `http://localhost:5180/api/GetItemsUnderParent${query}`;
+
+    const response = await axios.get<FetchItemsResponse>(url);
+    console.log(response.data);
+    return response.data;
+}
+
+export async function FetchItems(): Promise<FetchItemsResponse> {
+    const url = 'http://localhost:5100/api/GetItems'
 
     const response = await axios.get<FetchItemsResponse>(url);
     console.log(response.data);
