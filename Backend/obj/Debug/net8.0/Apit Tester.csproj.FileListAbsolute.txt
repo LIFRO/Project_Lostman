@@ -1,0 +1,8 @@
+C:\Users\linuz\Documents\Personal Programming\Porject LostMan\Backend\obj\Debug\net8.0\rpswa.dswa.cache.json
+C:\Users\linuz\Documents\Personal Programming\Porject LostMan\Backend\obj\Debug\net8.0\Apit Tester.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\linuz\Documents\Personal Programming\Porject LostMan\Backend\obj\Debug\net8.0\Apit Tester.AssemblyInfoInputs.cache
+C:\Users\linuz\Documents\Personal Programming\Porject LostMan\Backend\obj\Debug\net8.0\Apit Tester.AssemblyInfo.cs
+C:\Users\linuz\Documents\Personal Programming\Porject LostMan\Backend\obj\Debug\net8.0\Apit Tester.csproj.CoreCompileInputs.cache
+C:\Users\linuz\Documents\Personal Programming\Porject LostMan\Backend\obj\Debug\net8.0\Backend.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\linuz\Documents\Personal Programming\Porject LostMan\Backend\obj\Debug\net8.0\Apit Tester.RazorAssemblyInfo.cache
+C:\Users\linuz\Documents\Personal Programming\Porject LostMan\Backend\obj\Debug\net8.0\Apit Tester.RazorAssemblyInfo.cs
