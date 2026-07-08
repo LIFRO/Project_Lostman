@@ -16,7 +16,7 @@ export async function FetchItemsById(parentId: number | null): Promise<FetchItem
 }
 
 export async function FetchItems(): Promise<FetchItemsResponse> {
-    const url = 'http://localhost:5100/api/GetItems'
+    const url = 'http://localhost:5180/api/FetchItems'
 
     const response = await axios.get<FetchItemsResponse>(url);
     console.log(response.data);
