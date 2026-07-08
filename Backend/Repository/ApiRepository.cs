@@ -60,4 +60,16 @@ public class ApiRepository
 
         return Catalog;
     }
+
+    public async Task<(List<ApiCatalog> Catalogs, List<Api> Apis)> FetchItems()
+    {
+        List<Api> apiItems = await _db.Apis
+            .AsNoTracking()
+            .ToListAsync();
+        List<ApiCatalog> catalogItems = await _db.ApiCatalogs
+            .AsNoTracking()
+            .ToListAsync();
+        
+        return (catalogItems, apiItems);
+    }
 }
