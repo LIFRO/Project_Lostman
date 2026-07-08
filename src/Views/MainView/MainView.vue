@@ -10,6 +10,7 @@
 
     const folder = ref<ApiFolder[]> ([]);
     const createApiError = ref<string>("");
+    const createFolderError = ref<string>("");
     const toggleForm = ref<string>('');
     const folders = ref<ApiFolder[]> ([]);
     const apis = ref<Api[]> ([]);
@@ -26,9 +27,13 @@
     async function handleCreateFolder(name: string){
         try{
             await SaveFolder(name)
+            const items:FetchItemsResponse = await FetchItems();
+
+            folders.value = items.catalogs; 
         }catch(error)
         {
             console.log(error);
+            createFolderError.value = 'Error saving or updating folders';
         }
     }
 
@@ -36,7 +41,7 @@
         
         try{
             await SaveApi(data.name, data.method, data.url);
-            const items:FetchItemsResponse = await FetchItems(null);
+            const items:FetchItemsResponse = await FetchItems();
             if(!items) return;
 
             toggleForm.value = '';
@@ -45,10 +50,9 @@
         }
         catch(error){
             console.log(error);
-            createApiError.value = "Error couldnt save or fetch api's";
+            createApiError.value = "Error saving or updating apis";
         };
     };
-
 </script>
 
 <template>
