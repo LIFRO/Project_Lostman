@@ -59,10 +59,12 @@ public class ApiService
         return items;
     }
 
-    public async Task<(List<ApiCatalog> catalogs, List<Api> apis) FetchItems()
+    public async Task<(List<ApiCatalog> catalogs, List<Api> apis)> FetchItems()
     {
-        (List<ApiCatalog>, List<Api>) items = (Catalog, apis);
+        var (catalogs, apis)  = await _repo.FetchItems();
 
-        return item; 
+        (List<ApiCatalog>, List<Api>) items = (catalogs, apis);
+
+        return items; 
     }
 }
