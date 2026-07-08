@@ -28,8 +28,11 @@
         try{
             await SaveFolder(name)
             const items:FetchItemsResponse = await FetchItems();
+            if(!items) return;
 
+            apis.value = items.apis;
             folders.value = items.catalogs; 
+            toggleForm.value = '';
         }catch(error)
         {
             console.log(error);
