@@ -65,11 +65,13 @@ public class ApiRepository
     {
         List<Api> apiItems = await _db.Apis
             .AsNoTracking()
+            .Where(item => item.ParentId == null)
             .ToListAsync();
         List<ApiCatalog> catalogItems = await _db.ApiCatalogs
             .AsNoTracking()
+            .Where(item => item.ParentId == null)
             .ToListAsync();
-        
+
         return (catalogItems, apiItems);
     }
 }
