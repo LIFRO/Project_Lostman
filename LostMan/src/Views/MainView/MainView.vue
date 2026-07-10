@@ -85,7 +85,7 @@
             </div>
         </div>
         <div>
-            ApiList
+            Api list
             <ApiList :items="apis"/>
         </div>
     </div>
