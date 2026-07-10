@@ -8,7 +8,6 @@
     import "../../css/Main.css";
     import { ref } from 'vue';
 
-    const folder = ref<ApiFolder[]> ([]);
     const createApiError = ref<string>("");
     const createFolderError = ref<string>("");
     const toggleForm = ref<string>('');
@@ -49,7 +48,7 @@
 
             toggleForm.value = '';
             apis.value = items.apis;
-            folder.value = items.catalogs;
+            folders.value = items.catalogs;
         }
         catch(error){
             console.log(error);
@@ -86,7 +85,11 @@
         </div>
         <div>
             Api list
-            <ApiList :items="apis"/>
+            <ApiList :items="apis" />
+        </div>
+        <div>
+            Folder list
+            <FolderList :items="folders" />
         </div>
     </div>
 </template>
