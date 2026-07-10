@@ -67,6 +67,7 @@ public class ApiRepository
             .AsNoTracking()
             .Where(item => item.ParentId == null)
             .ToListAsync();
+
         List<ApiCatalog> catalogItems = await _db.ApiCatalogs
             .AsNoTracking()
             .Where(item => item.ParentId == null)
