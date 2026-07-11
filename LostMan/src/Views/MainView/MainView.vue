@@ -15,6 +15,7 @@
     const folders = ref<ApiFolder[]> ([]);
     const apis = ref<Api[]> ([]);
     const currentFolder = ref<ApiFolder>();
+    const error = ref<string>();
 
 const items:FetchItemsResponse = await FetchItems();
 
