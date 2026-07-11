@@ -4,18 +4,20 @@
     defineProps<{items: ApiFolder[]}>();
 
     const emit = defineEmits<{
-        currentFolder: [number]
+        currentFolder: [ApiFolder]
     }>()
 
-    function send(id: number){
-        emit("currentFolder", id)
+    function send(Folder: ApiFolder){
+        emit("currentFolder", Folder)
     }
 </script>
 
 <template>
     <ul>
-        <button v-on:click="send(item.id)" v-for="item in items" key="item.id">
-            <div>{{ item.name }}</div>
-        </button>
+        <li>
+            <button v-for="item in items" key="item.id" v-on:click="send(item)">
+                <div>{{ item.name }}</div>
+            </button>
+        </li>
     </ul>
 </template>
