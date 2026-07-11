@@ -7,7 +7,7 @@
     import ApiList from './Children/ApiList.vue';
     import FolderList from "./Children/FolderList.vue";
     import "../../css/Main.css";
-    import { ref } from 'vue';
+    import { onMounted, ref } from 'vue';
 
     const createApiError = ref<string>("");
     const createFolderError = ref<string>("");
@@ -15,12 +15,21 @@
     const folders = ref<ApiFolder[]> ([]);
     const apis = ref<Api[]> ([]);
     const currentFolder = ref<ApiFolder>();
-    const error = ref<string>();
+    const errorText = ref<string>("");
 
-const items:FetchItemsResponse = await FetchItems();
+    async function loadItems(){
+        try {
+            const items:FetchItemsResponse = await FetchItems();
 
-    folders.value = items.catalogs;
-    apis.value = items.apis; 
+            folders.value = items.catalogs;
+            apis.value = items.apis;
+        }catch(error){
+            console.log(error);
+            errorText.value = "Couldnt load apis and folders on startup"
+        }
+    }
+
+    onMounted(loadItems)
 
     async function folderChange(folder: ApiFolder){
         try{
@@ -79,7 +88,7 @@ const items:FetchItemsResponse = await FetchItems();
 
 <template>
     <p role="alert">
-        {{ error }}
+        {{ errorText }}
     </p>
     <div v-if="currentFolder != null">
         <button></button v-on:click="currentFolder.value = null" type="button">
@@ -115,7 +124,7 @@ const items:FetchItemsResponse = await FetchItems();
         </div>
         <div>
             Folder list
-            <FolderList :items="folders" @current-Folder="currentFolder = $event"/>
+            <FolderList :items="folders" @current-Folder="folderChange"/>
         </div>
         <div>
             {{ currentFolder }}
