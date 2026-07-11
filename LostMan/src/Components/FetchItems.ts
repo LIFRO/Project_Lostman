@@ -10,7 +10,9 @@ export async function FetchItemsById(parentId: number | null): Promise<FetchItem
     const query = parentId === null ? "" : `?id=${parentId}`;
     const url = `http://localhost:5180/api/GetItemsUnderParent${query}`;
 
-    const response = await axios.get<FetchItemsResponse>(url);
+    const response = await axios.get<FetchItemsResponse>(url, {
+        timeout: 5000
+    });
     console.log(response.data);
     return response.data;
 }
@@ -18,7 +20,10 @@ export async function FetchItemsById(parentId: number | null): Promise<FetchItem
 export async function FetchItems(): Promise<FetchItemsResponse> {
     const url = 'http://localhost:5180/api/FetchItems'
 
-    const response = await axios.get<FetchItemsResponse>(url);
+    const response = await axios.get<FetchItemsResponse>(url,{
+        timeout: 5000
+    }
+    );
     console.log(response.data);
     return response.data;
 }
