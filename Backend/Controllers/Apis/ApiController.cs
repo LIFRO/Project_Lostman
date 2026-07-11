@@ -41,7 +41,10 @@ public class ApiController : ControllerBase
     [HttpGet("FetchItems")]
     public async Task<IActionResult> FetchItems()
     {
+        Console.WriteLine("helol");
         var (catalogs, apis) = await _service.FetchItems();
+        Console.WriteLine("done");
+
         return Ok(new { catalogs, apis });
     }
 
