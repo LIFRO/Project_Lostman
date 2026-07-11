@@ -92,7 +92,7 @@
     </p>
     <div v-if="currentFolder != undefined">
         <button 
-        v-on:click="currentFolder = undefined" 
+        v-on:click="currentFolder = undefined, loadItems()" 
         type="button"
         class="Button"
         >
