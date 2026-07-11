@@ -5,6 +5,7 @@
     import CreateFolderForm from "./Children/CreateFolderForm.vue";
     import { SaveApi, SaveFolder } from "../../Components/SaveItems.ts";
     import ApiList from './Children/ApiList.vue';
+    import FolderList from "./Children/FolderList.vue";
     import "../../css/Main.css";
     import { ref } from 'vue';
 
@@ -14,6 +15,15 @@
     const folders = ref<ApiFolder[]> ([]);
     const apis = ref<Api[]> ([]);
     const currentFolder = ref<ApiFolder>();
+
+        firstFetch();
+
+    async function firstFetch(){
+        const items:FetchItemsResponse = await FetchItems();
+
+        folders.value = items.catalogs;
+        apis.value = items.apis;
+    }
 
     function toggleCreateFolder(){
         toggleForm.value = 'folder';
@@ -89,7 +99,7 @@
         </div>
         <div>
             Folder list
-            <FolderList :items="folders" />
+            <FolderList :items="folders" @current-Folder="currentFolder = $event"/>
         </div>
     </div>
 </template>
