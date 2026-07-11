@@ -78,6 +78,9 @@ const items:FetchItemsResponse = await FetchItems();
 </script>
 
 <template>
+    <p role="alert">
+        {{ error }}
+    </p>
     <div v-if="currentFolder != null">
         <button></button v-on:click="currentFolder.value = null" type="button">
     </div>
