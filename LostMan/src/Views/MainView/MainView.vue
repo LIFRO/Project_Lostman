@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-    import { FetchItems, type FetchItemsResponse } from "../../Components/FetchItems.ts";
+    import { FetchItems, FetchItemsById, type FetchItemsResponse } from "../../Components/FetchItems.ts";
     import  type { ApiFolder,  Api, CreateApi } from '../../Model/ApiTypes';
     import CreateApiForm from "./Children/CreateApiForm.vue";
     import CreateFolderForm from "./Children/CreateFolderForm.vue";
@@ -16,13 +16,22 @@
     const apis = ref<Api[]> ([]);
     const currentFolder = ref<ApiFolder>();
 
-        firstFetch();
+const items:FetchItemsResponse = await FetchItems();
 
-    async function firstFetch(){
-        const items:FetchItemsResponse = await FetchItems();
+    folders.value = items.catalogs;
+    apis.value = items.apis; 
 
-        folders.value = items.catalogs;
-        apis.value = items.apis;
+    async function folderChange(folder: ApiFolder){
+        try{
+        const foldersInsideOfCurrentFolder: FetchItemsResponse = await FetchItemsById(folder.id);
+
+        currentFolder.value = folder;
+        apis.value = foldersInsideOfCurrentFolder.apis;
+        folders.value = foldersInsideOfCurrentFolder.catalogs;
+        }
+        catch(error){
+            console.log(error)
+        }
     }
 
     function toggleCreateFolder(){
@@ -68,6 +77,9 @@
 </script>
 
 <template>
+    <div v-if="currentFolder != null">
+        <button></button v-on:click="currentFolder.value = null" type="button">
+    </div>
     <div>
         <div>
             <button 
@@ -100,6 +112,9 @@
         <div>
             Folder list
             <FolderList :items="folders" @current-Folder="currentFolder = $event"/>
+        </div>
+        <div>
+            {{ currentFolder }}
         </div>
     </div>
 </template>
