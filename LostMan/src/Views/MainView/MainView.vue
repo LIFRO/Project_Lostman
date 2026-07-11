@@ -94,6 +94,7 @@
         <button 
         v-on:click="currentFolder = undefined" 
         type="button"
+        class="Button"
         >
             Back
         </button>
