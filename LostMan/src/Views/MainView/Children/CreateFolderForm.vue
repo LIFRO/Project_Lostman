@@ -1,5 +1,8 @@
 <script lang="ts" setup>
+import type { ApiFolder } from '../../../Model/ApiTypes';
 import { ref } from 'vue';
+
+    defineProps<{currentFolderChild: ApiFolder|undefined}>();
 
     const name = ref<string>('');
     const emit = defineEmits<{
