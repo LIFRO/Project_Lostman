@@ -90,8 +90,13 @@
     <p role="alert">
         {{ errorText }}
     </p>
-    <div v-if="currentFolder != null">
-        <button></button v-on:click="currentFolder.value = null" type="button">
+    <div v-if="currentFolder != undefined">
+        <button 
+        v-on:click="currentFolder = undefined" 
+        type="button"
+        >
+            Back
+        </button>
     </div>
     <div>
         <div>
