@@ -1,20 +1,30 @@
 <script lang="ts" setup>
-import type { ApiFolder } from '../../../Model/ApiTypes';
+import { AddItemsUnderItemById } from '../../../Components/SaveItems';
+import type { ApiFolder, ExplorerItemRequest} from '../../../Model/ApiTypes';
 import { ref } from 'vue';
 
-    const currentFolderChild = defineProps<{currentFolderChild: ApiFolder|undefined}>();
+    const props = defineProps<{currentFolderChild: ApiFolder|undefined}>();
 
     const name = ref<string>('');
     const emit = defineEmits<{
         newFolder: [data: string]
     }>()
 
-    function send(){
-        if (currentFolderChild === undefined){
-            emit("newFolder", name.value)
+    async function send(){
+        if (props.currentFolderChild === undefined){
+            emit("newFolder", name.value);
         }
         else{
-            currentFolderChild
+            const item: ExplorerItemRequest = {
+                id: props.currentFolderChild.id,
+                catalogs: [
+                    {
+                        name: name.value,
+                        parentId: props.currentFolderChild.id
+                    }
+                ]
+            };
+            await AddItemsUnderItemById(item)
         }
     } 
 </script>
