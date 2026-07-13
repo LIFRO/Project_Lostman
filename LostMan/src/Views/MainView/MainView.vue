@@ -114,7 +114,7 @@
         </div>
         <div>
             <div v-if="toggleForm == 'folder'">
-                <CreateFolderForm :currentFolder="currentFolder" @new-folder="handleCreateFolder">
+                <CreateFolderForm :current-folder-child="currentFolder" @new-folder="handleCreateFolder">
                     <p></p>
                 </CreateFolderForm>
             </div>
