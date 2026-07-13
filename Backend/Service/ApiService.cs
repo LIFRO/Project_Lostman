@@ -67,4 +67,24 @@ public class ApiService
 
         return items; 
     }
+
+    public async Task<ExplorerItemRequest> AddItemUnderFolder(ExplorerItemRequest request)
+    {
+        if(request.Api != null)
+        {
+            foreach (Api item in request.Api)
+            {
+                Api returnedApi = await _repo.SaveApi(item);
+            
+                returnedApi = await _repo.AddToFolder(returnedApi);
+            }
+        }
+        if(request.Catalog != null)
+        {
+            foreach(ApiCatalog item in request.Catalog)
+            {
+                ApiCatalog returnedCatalog = await _repo.SaveCatalog(item);
+            }
+        }
+    }
 }

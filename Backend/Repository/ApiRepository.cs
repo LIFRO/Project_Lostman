@@ -75,4 +75,19 @@ public class ApiRepository
 
         return (catalogItems, apiItems);
     }
+    
+    public async Task<Api> AddToFolder(Api request)
+    {
+        ApiCatalog? parent = await _db.ApiCatalogs
+        .FirstOrDefaultAsync(item => item.Id == request.ParentId);
+        
+        if(parent == null)
+        {
+        } 
+        request.ParentId
+    }
+    public async Task<ApiCatalog> AddToFolder(ApiCatalog request)
+    {
+        
+    }
 }

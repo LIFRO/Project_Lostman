@@ -48,4 +48,11 @@ public class ApiController : ControllerBase
         return Ok(new { catalogs, apis });
     }
 
+    [HttpPatch("AddItemUnderFolder")]
+    public async Task<IActionResult> AddItemUnderFolder(ExplorerItemRequest request)
+    {
+        ExplorerItemRequest item = await_service.AddItemUnderFolder(request);
+
+        return Ok(request);
+    }
 }
