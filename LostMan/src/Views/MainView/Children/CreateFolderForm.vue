@@ -2,7 +2,7 @@
 import type { ApiFolder } from '../../../Model/ApiTypes';
 import { ref } from 'vue';
 
-    defineProps<{currentFolderChild: ApiFolder|undefined}>();
+    const currentFolderChild = defineProps<{currentFolderChild: ApiFolder|undefined}>();
 
     const name = ref<string>('');
     const emit = defineEmits<{
@@ -10,7 +10,12 @@ import { ref } from 'vue';
     }>()
 
     function send(){
-        emit("newFolder", name.value)
+        if (currentFolderChild === undefined){
+            emit("newFolder", name.value)
+        }
+        else{
+            currentFolderChild
+        }
     } 
 </script>
 
