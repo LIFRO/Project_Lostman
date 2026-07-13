@@ -15,7 +15,13 @@ export type Api = {
     url:string
 }
 
+export type ExplorerItemRequest = {
+    id: number,
+    catalogs?: CreateFolder[],
+    api?: CreateApi[]
+}
+
 export type CreateApi = Omit<Api, 'id'>
-export type CreateFolder = Omit<ApiFolder, 'id'>
+export type CreateFolder = Omit<ApiFolder, 'id' | 'childrenIds'>
 
 export type ApiType = ApiFolder | Api
