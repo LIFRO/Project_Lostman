@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { httpMethod } from "../Model/ApiTypes";
+import type { httpMethod, ExplorerItemRequest } from "../Model/ApiTypes";
 
 export async function SaveFolder(folder: string) {
     try {
@@ -32,5 +32,18 @@ export async function SaveApi(apiName: string, apiMethod: httpMethod, apiUrl: st
             throw new Error(`Save failed: ${error.response.status} ${JSON.stringify(error.response.data)}`);
         }
         throw error;
+    }
+}
+
+export async function AddItemsUnderItemById(requestItem: ExplorerItemRequest){
+    try { 
+        console.log(JSON.stringify(requestItem))
+        const response = await axios.patch("http://localhost:5180/api/AddItemUnderFolder",
+            requestItem,
+        { timeout: 5000}
+        );
+        console.log(response.data)
+    }catch(error){
+        console.log(error)
     }
 }
