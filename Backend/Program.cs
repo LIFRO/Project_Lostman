@@ -34,6 +34,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseMiddleware<ExceptionMiddleWare>();
+
 app.UseStaticFiles();
 app.UseRouting();
 app.UseCors("FrontendDev");
