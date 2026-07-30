@@ -53,10 +53,7 @@ public class ApiRepository
 
     public async Task<ApiCatalog> CatalogById(Int64 Id)
     {
-        var Catalog = await _db.ApiCatalogs.FindAsync(Id);
-
-        if(Catalog == null)
-            throw new ArgumentException("Id not found in database");
+        var Catalog = await _db.ApiCatalogs.FindAsync(Id) ?? throw new ArgumentException("ID");
 
         return Catalog;
     }
@@ -76,18 +73,32 @@ public class ApiRepository
         return (catalogItems, apiItems);
     }
     
-    public async Task<Api> AddToFolder(Api request)
+    public async Task AddToFolder(Api request, long? parentId)
     {
-        ApiCatalog? parent = await _db.ApiCatalogs
-        .FirstOrDefaultAsync(item => item.Id == request.ParentId);
-        
-        if(parent == null)
-        {
-        } 
-        request.ParentId
+        ApiCatalog parent = await _db.ApiCatalogs
+            .FirstOrDefaultAsync(item => item.Id == parentId) 
+            ?? throw new KeyNotFoundException("Could not find parent");
+
+        request.ParentId = parent.Id;
+
+        Api child = await SaveApi(request);
+        parent.ApisId.Add(child.Id);
+
+        await _db.SaveChangesAsync();
     }
-    public async Task<ApiCatalog> AddToFolder(ApiCatalog request)
+
+    public async Task AddToFolder(ApiCatalog request, long? parentId)
     {
-        
+
+        ApiCatalog parent = await _db.ApiCatalogs
+            .FirstOrDefaultAsync(item => item.Id == parentId)
+            ?? throw new KeyNotFoundException("could not find parent");
+
+        request.ParentId = parentId;
+
+        ApiCatalog child = await SaveCatalog(request);
+        parent.ChildrenId.Add(child.Id);
+
+        await _db.SaveChangesAsync();
     }
 }
