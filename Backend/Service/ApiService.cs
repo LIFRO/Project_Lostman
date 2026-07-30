@@ -16,11 +16,6 @@ public class ApiService
             throw new ArgumentException("name is required");
         };
 
-        if (req.ParentId.HasValue)
-        {
-            var parentExists = await _repo.CatalogById(req.ParentId.Value);
-        }
-
         var Catalog = new ApiCatalog
         {
             Name = req.Name,
@@ -68,23 +63,22 @@ public class ApiService
         return items; 
     }
 
-    public async Task<ExplorerItemRequest> AddItemUnderFolder(ExplorerItemRequest request)
+    public async Task AddItemUnderFolder(ExplorerItemRequest request)
     {
         if(request.Api != null)
         {
             foreach (Api item in request.Api)
             {
-                Api returnedApi = await _repo.SaveApi(item);
-            
-                returnedApi = await _repo.AddToFolder(returnedApi);
+                await _repo.AddToFolder(item, request.Id);
             }
         }
         if(request.Catalog != null)
         {
             foreach(ApiCatalog item in request.Catalog)
             {
-                ApiCatalog returnedCatalog = await _repo.SaveCatalog(item);
+                await _repo.AddToFolder(item, request.Id);
             }
         }
+        Console.WriteLine(request);
     }
 }
