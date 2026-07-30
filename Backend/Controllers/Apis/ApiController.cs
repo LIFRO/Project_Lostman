@@ -41,9 +41,7 @@ public class ApiController : ControllerBase
     [HttpGet("FetchItems")]
     public async Task<IActionResult> FetchItems()
     {
-        Console.WriteLine("helol");
         var (catalogs, apis) = await _service.FetchItems();
-        Console.WriteLine("done");
 
         return Ok(new { catalogs, apis });
     }
@@ -51,7 +49,7 @@ public class ApiController : ControllerBase
     [HttpPatch("AddItemUnderFolder")]
     public async Task<IActionResult> AddItemUnderFolder(ExplorerItemRequest request)
     {
-        ExplorerItemRequest item = await_service.AddItemUnderFolder(request);
+        await _service.AddItemUnderFolder(request);
 
         return Ok(request);
     }
