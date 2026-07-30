@@ -1,9 +1,9 @@
 <script lang="ts" setup>
     import { FetchItems, FetchItemsById, type FetchItemsResponse } from "../../Components/FetchItems.ts";
-    import  type { ApiFolder,  Api, CreateApi } from '../../Model/ApiTypes';
+    import  type { ApiFolder,  Api, CreateApi, ExplorerItemRequest } from '../../Model/ApiTypes';
     import CreateApiForm from "./Children/CreateApiForm.vue";
     import CreateFolderForm from "./Children/CreateFolderForm.vue";
-    import { SaveApi, SaveFolder } from "../../Components/SaveItems.ts";
+    import { AddItemsUnderItemById, SaveApi, SaveFolder } from "../../Components/SaveItems.ts";
     import ApiList from './Children/ApiList.vue';
     import FolderList from "./Children/FolderList.vue";
     import "../../css/Main.css";
@@ -68,21 +68,36 @@
         }
     }
 
-    async function handleCreateApi(data: CreateApi){
-        
-        try{
-            await SaveApi(data.name, data.method, data.url);
-            const items:FetchItemsResponse = await FetchItems();
-            if(!items) return;
+    async function handleCreateApi(api: CreateApi){
+        if (currentFolder != undefined && currentFolder.value?.id != undefined){
+            try{
+                const data: ExplorerItemRequest = {
+                    id: currentFolder.value?.id,
+                    catalogs: undefined,
+                    api: [api]
+                };
 
-            toggleForm.value = '';
-            apis.value = items.apis;
-            folders.value = items.catalogs;
+                await AddItemsUnderItemById(data)
+            }
+            catch(error){
+                console.log(error)
+            }
         }
-        catch(error){
-            console.log(error);
-            createApiError.value = "Error saving or updating apis";
-        };
+        else{
+            try{
+                await SaveApi(api.name, api.method, api.url);
+                const items:FetchItemsResponse = await FetchItems();
+                if(!items) return;
+
+                toggleForm.value = '';
+                apis.value = items.apis;
+                folders.value = items.catalogs;
+            }
+            catch(error){
+                console.log(error);
+                createApiError.value = "Error saving or updating apis";
+            };
+        }
     };
 </script>
 

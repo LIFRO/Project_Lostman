@@ -45,5 +45,7 @@ export async function AddItemsUnderItemById(requestItem: ExplorerItemRequest){
         console.log(response.data)
     }catch(error){
         console.log(error)
+        
+        throw(error);
     }
 }
