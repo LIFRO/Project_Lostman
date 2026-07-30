@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.AspNetCore.Mvc;
 using Backend.Service;
 using Backend.Models;
@@ -51,6 +50,6 @@ public class ApiController : ControllerBase
     {
         await _service.AddItemUnderFolder(request);
 
-        return Ok(request);
+        return Ok("Succes");
     }
 }
