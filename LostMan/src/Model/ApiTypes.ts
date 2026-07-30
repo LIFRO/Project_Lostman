@@ -17,8 +17,8 @@ export type Api = {
 
 export type ExplorerItemRequest = {
     id: number,
-    catalogs?: CreateFolder[],
     api?: CreateApi[]
+    catalogs?: CreateFolder[],
 }
 
 export type CreateApi = Omit<Api, 'id'>
