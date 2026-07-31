@@ -1,6 +1,6 @@
 <script lang="ts" setup>
     import { FetchItems, FetchItemsById, type FetchItemsResponse } from "../../Components/FetchItems.ts";
-    import  type { ApiFolder,  Api, CreateApi, ExplorerItemRequest } from '../../Model/ApiTypes';
+    import  type { ApiFolder,  Api, CreateApi, ExplorerItemRequest, CreateFolder } from '../../Model/ApiTypes';
     import CreateApiForm from "./Children/CreateApiForm.vue";
     import CreateFolderForm from "./Children/CreateFolderForm.vue";
     import { AddItemsUnderItemById, SaveApi, SaveFolder } from "../../Components/SaveItems.ts";
@@ -53,18 +53,37 @@
     };
 
     async function handleCreateFolder(name: string){
-        try{
-            await SaveFolder(name)
-            const items:FetchItemsResponse = await FetchItems();
-            if(!items) return;
+        if(currentFolder != undefined && currentFolder.value?.id != undefined){
+            try{
+                const Folder: CreateFolder = {
+                    parentId: currentFolder.value.id,
+                    name: name
+                }
 
-            apis.value = items.apis;
-            folders.value = items.catalogs; 
-            toggleForm.value = '';
-        }catch(error)
-        {
-            console.log(error);
-            createFolderError.value = 'Error saving or updating folders';
+                const data: ExplorerItemRequest = {
+                    id: currentFolder.value.id,
+                    catalogs: [Folder],
+                    api: undefined
+                }
+
+                await AddItemsUnderItemById(data)
+            }catch(error){
+                console.log(error)
+            }
+        }else{
+            try{
+                await SaveFolder(name)
+                const items:FetchItemsResponse = await FetchItems();
+                if(!items) return;
+
+                apis.value = items.apis;
+                folders.value = items.catalogs; 
+                toggleForm.value = '';
+            }catch(error)
+            {
+                console.log(error);
+                createFolderError.value = 'Error saving or updating folders';
+            }
         }
     }
 
@@ -72,7 +91,7 @@
         if (currentFolder != undefined && currentFolder.value?.id != undefined){
             try{
                 const data: ExplorerItemRequest = {
-                    id: currentFolder.value?.id,
+                    id: currentFolder.value.id,
                     catalogs: undefined,
                     api: [api]
                 };
