@@ -7,5 +7,5 @@ public class ExplorerItemRequest()
     [Required]
     public Int64? Id { get; set; }
     public List<Api>? Api { get; set; }
-    public List<ApiCatalog>? Catalog { get; set; }
+    public List<ApiCatalog>? Catalogs { get; set; }
 }

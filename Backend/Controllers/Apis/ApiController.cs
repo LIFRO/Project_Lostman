@@ -50,6 +50,6 @@ public class ApiController : ControllerBase
     {
         await _service.AddItemUnderFolder(request);
 
-        return Ok("Succes");
+        return Ok(request.Id);
     }
 }

@@ -1,5 +1,6 @@
 using Backend.Repository;
 using Backend.Models;
+using System.Text.Json;
 
 namespace Backend.Service;
 
@@ -49,6 +50,8 @@ public class ApiService
         List<ApiCatalog> Catalogs = await _repo.GetItemsUnderParentCatalog(id);
         List<Api> apis = await _repo.GetItemsUnderParentApi(id);
 
+        Console.WriteLine("Service Layer Get Items Under Folder " + Catalogs + " " + apis);
+
         (List<ApiCatalog>, List<Api>) items = (Catalogs, apis);
 
         return items;
@@ -65,20 +68,22 @@ public class ApiService
 
     public async Task AddItemUnderFolder(ExplorerItemRequest request)
     {
+        Console.WriteLine("Service Layer" + JsonSerializer.Serialize(request));
         if(request.Api != null)
         {
             foreach (Api item in request.Api)
             {
                 await _repo.AddToFolder(item, request.Id);
+                Console.WriteLine(item);
             }
         }
-        if(request.Catalog != null)
+        if(request.Catalogs != null)
         {
-            foreach(ApiCatalog item in request.Catalog)
+            foreach(ApiCatalog item in request.Catalogs)
             {
                 await _repo.AddToFolder(item, request.Id);
+                Console.WriteLine(item);
             }
         }
-        Console.WriteLine(request);
     }
 }
