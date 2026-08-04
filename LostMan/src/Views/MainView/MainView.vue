@@ -62,11 +62,18 @@
 
                 const data: ExplorerItemRequest = {
                     id: currentFolder.value.id,
-                    catalogs: [Folder],
-                    api: undefined
+                    api: [],
+                    catalogs: [Folder]
                 }
 
                 await AddItemsUnderItemById(data)
+                
+                const items:FetchItemsResponse = await FetchItemsById(currentFolder.value?.id);
+                if(!items) return;
+
+                apis.value = items.apis;
+                folders.value = items.catalogs;
+                toggleForm.value = '';
             }catch(error){
                 console.log(error)
             }
@@ -97,6 +104,13 @@
                 };
 
                 await AddItemsUnderItemById(data)
+                
+                const items:FetchItemsResponse = await FetchItemsById(currentFolder.value?.id);
+                if(!items) return;
+
+                apis.value = items.apis;
+                folders.value = items.catalogs;
+                toggleForm.value = '';
             }
             catch(error){
                 console.log(error)
@@ -108,9 +122,9 @@
                 const items:FetchItemsResponse = await FetchItems();
                 if(!items) return;
 
-                toggleForm.value = '';
                 apis.value = items.apis;
                 folders.value = items.catalogs;
+                toggleForm.value = '';
             }
             catch(error){
                 console.log(error);
