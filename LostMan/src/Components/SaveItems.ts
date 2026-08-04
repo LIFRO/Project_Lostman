@@ -43,6 +43,7 @@ export async function AddItemsUnderItemById(requestItem: ExplorerItemRequest){
         { timeout: 5000}
         );
         console.log(response.data);
+        return response.data;
     }catch(error){
         console.log(error);
         
