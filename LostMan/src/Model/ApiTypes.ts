@@ -22,6 +22,7 @@ export type ExplorerItemRequest = {
 }
 
 export type CreateApi = Omit<Api, 'id'>
+export type PatchApi = Partial<Omit<Api, "id"  | "parentId">> & Pick<Api,"id">
 export type CreateFolder = Omit<ApiFolder, 'id' | 'childrenIds'>
 
 export type ApiType = ApiFolder | Api
