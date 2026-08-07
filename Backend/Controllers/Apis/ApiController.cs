@@ -52,4 +52,5 @@ public class ApiController : ControllerBase
 
         return Ok(request.Id);
     }
+    [HttpPatch("SaveEditedApi")]
 }
