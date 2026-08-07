@@ -8,6 +8,7 @@
     import FolderList from "./Children/FolderList.vue";
     import "../../css/Main.css";
     import { onMounted, ref } from 'vue';
+    import { useRouter } from "vue-router";
 
     const createApiError = ref<string>("");
     const createFolderError = ref<string>("");
@@ -16,6 +17,10 @@
     const apis = ref<Api[]> ([]);
     const currentFolder = ref<ApiFolder>();
     const errorText = ref<string>("");
+
+        function EditApi(){
+            useRouter().push("")
+        }
 
     async function loadItems(){
         try {
@@ -167,7 +172,7 @@
                 </CreateFolderForm>
             </div>
             <div v-else-if="toggleForm == 'api'">
-                <CreateApiForm @update-api="handleCreateApi">
+                <CreateApiForm @update-api="handleCreateApi" v-on:click="">
                     <p>{{ createApiError }}</p> 
                 </CreateApiForm>
             </div>
