@@ -31,7 +31,7 @@ public class ApiController : ControllerBase
     }
 
     [HttpGet("GetItemsUnderParent")]
-    public async Task<IActionResult> GetItemsUnderParent ([FromQuery] long? id)
+    public async Task<IActionResult> GetItemsUnderParent([FromQuery] long? id)
     {
         var (catalogs, apis) = await _service.GetItemsUnderParent(id);
         return Ok(new { catalogs, apis });
@@ -53,4 +53,8 @@ public class ApiController : ControllerBase
         return Ok(request.Id);
     }
     [HttpPatch("SaveEditedApi")]
+    public async Task<IActionResult> SaveEditedApi(ExplorerItemRequest request)
+    {
+        await _service
+    }
 }
