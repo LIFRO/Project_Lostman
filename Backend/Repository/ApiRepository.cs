@@ -1,6 +1,3 @@
-using System.ComponentModel;
-using System.IO.Pipes;
-using Microsoft.VisualBasic;
 using Backend.Data;
 using Backend.Models;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +13,7 @@ public class ApiRepository
     public async Task<ApiCatalog> SaveCatalog(ApiCatalog catalog)
     {
         _db.ApiCatalogs.Add(catalog);
-    
+
         await _db.SaveChangesAsync();
 
         return catalog;
@@ -47,8 +44,15 @@ public class ApiRepository
             .AsNoTracking()
             .Where(x => x.ParentId == id)
             .ToListAsync();
-    
+
         return item;
+    }
+
+    public async Task<Api> ApiById(Int64 Id)
+    {
+        var Api = await _db.Apis.FindAsync(Id) ?? throw new ArgumentException("ID");
+
+        return Api;
     }
 
     public async Task<ApiCatalog> CatalogById(Int64 Id)
@@ -72,11 +76,11 @@ public class ApiRepository
 
         return (catalogItems, apiItems);
     }
-    
+
     public async Task AddToFolder(Api request, long? parentId)
     {
         ApiCatalog parent = await _db.ApiCatalogs
-            .FirstOrDefaultAsync(item => item.Id == parentId) 
+            .FirstOrDefaultAsync(item => item.Id == parentId)
             ?? throw new KeyNotFoundException("Could not find parent");
 
         request.ParentId = parent.Id;
@@ -98,6 +102,30 @@ public class ApiRepository
 
         ApiCatalog child = await SaveCatalog(request);
         parent.ChildrenId.Add(child.Id);
+
+        await _db.SaveChangesAsync();
+    }
+    public async Task UpdateApi(EditedApi request)
+    {
+        Api originalApi = await ApiById(request.Id)
+        ?? throw new KeyNotFoundException("could not find api");
+
+        foreach (var sourceProperty in request.GetType().GetProperties())
+        {
+            if (sourceProperty.PropertyType == typeof(long) && sourceProperty == null)
+                continue;
+
+            foreach (var targetProperty in originalApi.GetType().GetProperties())
+            {
+                if (targetProperty.PropertyType == sourceProperty.PropertyType)
+                {
+                    object? propertyValue = sourceProperty.GetValue(request);
+                    targetProperty.SetValue(originalApi, propertyValue);
+
+                    break;
+                }
+            }
+        }
 
         await _db.SaveChangesAsync();
     }

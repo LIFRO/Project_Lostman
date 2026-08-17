@@ -13,9 +13,11 @@ public class ApiService
 
     public async Task<ApiCatalog> CreateCatalog(ApiCatalog req)
     {
-        if (string.IsNullOrWhiteSpace(req.Name)){
+        if (string.IsNullOrWhiteSpace(req.Name))
+        {
             throw new ArgumentException("name is required");
-        };
+        }
+        ;
 
         var Catalog = new ApiCatalog
         {
@@ -24,22 +26,24 @@ public class ApiService
         };
 
         Catalog = await _repo.SaveCatalog(Catalog);
-    
+
         return Catalog;
     }
 
     public async Task<Api> CreateApi(Api req)
     {
-        if (string.IsNullOrWhiteSpace(req.Name)){
+        if (string.IsNullOrWhiteSpace(req.Name))
+        {
             throw new ArgumentException("name is required");
-        };
-        
+        }
+        ;
+
         var api = new Api
         {
             Name = req.Name,
             ParentId = req.ParentId,
         };
-        
+
         api = await _repo.SaveApi(api);
 
         return api;
@@ -59,17 +63,17 @@ public class ApiService
 
     public async Task<(List<ApiCatalog> catalogs, List<Api> apis)> FetchItems()
     {
-        var (catalogs, apis)  = await _repo.FetchItems();
+        var (catalogs, apis) = await _repo.FetchItems();
 
         (List<ApiCatalog>, List<Api>) items = (catalogs, apis);
 
-        return items; 
+        return items;
     }
 
     public async Task AddItemUnderFolder(ExplorerItemRequest request)
     {
         Console.WriteLine("Service Layer" + JsonSerializer.Serialize(request));
-        if(request.Api != null)
+        if (request.Api != null)
         {
             foreach (Api item in request.Api)
             {
@@ -77,13 +81,17 @@ public class ApiService
                 Console.WriteLine(item);
             }
         }
-        if(request.Catalogs != null)
+        if (request.Catalogs != null)
         {
-            foreach(ApiCatalog item in request.Catalogs)
+            foreach (ApiCatalog item in request.Catalogs)
             {
                 await _repo.AddToFolder(item, request.Id);
                 Console.WriteLine(item);
             }
         }
+    }
+    public async Task SaveEditedApi(EditedApi request)
+    {
+        await _repo.UpdateApi(request);
     }
 }

@@ -53,8 +53,10 @@ public class ApiController : ControllerBase
         return Ok(request.Id);
     }
     [HttpPatch("SaveEditedApi")]
-    public async Task<IActionResult> SaveEditedApi(ExplorerItemRequest request)
+    public async Task<IActionResult> SaveEditedApi(EditedApi request)
     {
-        await _service
+        await _service.SaveEditedApi(request);
+
+        return Ok(request.Id);
     }
 }
