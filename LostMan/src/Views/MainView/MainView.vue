@@ -17,9 +17,13 @@
     const apis = ref<Api[]> ([]);
     const currentFolder = ref<ApiFolder>();
     const errorText = ref<string>("");
+    const router = useRouter();
 
-        function EditApi(){
-            useRouter().push("")
+        function EditApi(Api: Api){
+	    router.push({
+		name: "EditApi",
+		state: {Api: Api},
+	    })
         }
 
     async function loadItems(){
@@ -179,7 +183,7 @@
         </div>
         <div>
             Api list
-            <ApiList :items="apis" />
+            <ApiList :items="apis" @ClickedApi="EditApi"/>
         </div>
         <div>
             Folder list

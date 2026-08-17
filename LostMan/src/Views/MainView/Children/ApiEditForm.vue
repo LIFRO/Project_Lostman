@@ -17,7 +17,7 @@
         }
         
         if(newName.value != props.SelectedApi.name){
-            newApi.name == newName.value;
+            newApi.name = newName.value;
             changeHappened = true;
         }
 
@@ -50,7 +50,7 @@
                 <option value="https://">https</option>
             </select>
             <input placeholder="Url" v-model="newUrl">
-            <select>
+            <select v-model="newApiMethod">
                 <option value="GET">GET</option>
                 <option value="POST">POST</option>
                 <option value="PUT">PUT</option>

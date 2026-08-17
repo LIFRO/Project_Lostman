@@ -5,7 +5,7 @@ defineProps<{items: Api[]}>();
 
 <template>
     <ul>
-        <button v-for="item in items" key="item.id">
+        <button v-for="item in items" key="item.id" @click="$emit('ClickedApi', item)">
             <div>{{item.name}}</div>
         </button>
     </ul>
