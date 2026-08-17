@@ -3,7 +3,7 @@
     import { asyncSaveEditedApi } from '../../../Components/EditedItems';
     import { ref } from 'vue';
 
-    const props = defineProps<{SelectedApi: Api}>();
+    const props = defineProps<{SelectedApi?: Api}>();
 
     const newName = ref<string>('');
     const newApiMethod = ref<httpMethod>('GET');
@@ -12,6 +12,8 @@
     let changeHappened: boolean = false;
 
     async function saveChanges(){
+        if (!props.SelectedApi) return;
+
         let newApi: PatchApi = {
             id: props.SelectedApi.id,
         }
@@ -39,17 +41,24 @@
         asyncSaveEditedApi(newApi);
     }
 
-</script>
+    console.log(props.SelectedApi)
 
+</script>
 <template>
     <div>
-        <div>
-            <input placeholder="Name">
-            <select v-model="urlProtocol">
+	<div>
+	    <input :placeholder="props.SelectedApi?.name ?? ''" v-model="newName">
+        </div>
+	<div>
+	    <select v-model="urlProtocol">
                 <option value="http://"> http</option>
                 <option value="https://">https</option>
             </select>
-            <input placeholder="Url" v-model="newUrl">
+	</div>
+	<div>
+		<input placeholder="Url" v-model="newUrl">
+	</div>
+	<div>
             <select v-model="newApiMethod">
                 <option value="GET">GET</option>
                 <option value="POST">POST</option>

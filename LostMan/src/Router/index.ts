@@ -16,7 +16,7 @@ const router = createRouter({
 			name: "EditApi",
 			component: ApiEditForm,
 			props: () => ({
-				SelectedApi: history.state.Api,
+				SelectedApi: window.history.state?.Api,
 			}),
 		},
 	],

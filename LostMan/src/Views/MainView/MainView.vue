@@ -19,10 +19,11 @@
     const errorText = ref<string>("");
     const router = useRouter();
 
-        function EditApi(Api: Api){
+        function EditApi(api: Api){
 	    router.push({
 		name: "EditApi",
-		state: {Api: Api},
+		// History state can only contain structured-cloneable plain values.
+		state: { Api: { ...api } },
 	    })
         }
 
@@ -183,7 +184,7 @@
         </div>
         <div>
             Api list
-            <ApiList :items="apis" @ClickedApi="EditApi"/>
+            <ApiList :items="apis" @api-clicked="EditApi"/>
         </div>
         <div>
             Folder list
