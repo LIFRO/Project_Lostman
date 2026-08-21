@@ -37,7 +37,7 @@
         </select>
 
         <button type="button" @click="send()"> 
-            Create note 
+            Create Api
         </button>
 
         <slot></slot>
